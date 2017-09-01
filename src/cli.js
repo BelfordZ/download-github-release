@@ -12,6 +12,7 @@ commander
   .arguments('<user> <repo> [outputdir]')
   .option('-p, --prerelease', 'download prerelease')
   .option('-s, --search <regexp>', 'filter assets name')
+  .option('-x, --extract', 'extract zip files')
   .parse(process.argv);
 
 const user = commander.args[0];
@@ -34,5 +35,5 @@ function filterAsset(asset) {
   return new RegExp(commander.search).exec(asset.name);
 }
 
-downloadRelease(user, repo, outputdir, filterRelease, filterAsset)
+downloadRelease(user, repo, outputdir, filterRelease, filterAsset, !!commander.extract)
   .catch(err => console.error(err.message));
